@@ -62,3 +62,14 @@ def apply_player_movement():
         p2_y_pos = max(p2_y_pos - paddle_speed, 0)
     elif p2_down:
         p2_y_pos = min(p2_y_pos + paddle_speed, HEIGTH)
+
+
+def aplly_ball_movement():
+    global ball_x_pos
+    global ball_y_pos
+    global ball_x_vel
+    global ball_y_vel
+    global p1_score
+    global p2_score
+
+    
