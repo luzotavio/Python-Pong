@@ -72,4 +72,72 @@ def aplly_ball_movement():
     global p1_score
     global p2_score
 
-    
+    if(ball_x_pos + ball_x_vel < p1_x_pos + paddle_width) and (p1_y_pos < ball_y_pos + ball_y_vel + ball_width < p1_y_pos + paddle_height):
+        ball_x_vel = -ball_x_vel
+        ball_y_vel = (p1_y_pos + paddle_height / 2 - ball_y_pos) / 15
+
+        ball_y_vel = -ball_y_vel
+
+    elif ball_x_pos + ball_x_vel < 0:
+        p2_score += 1
+        ball_x_pos = WIDTH / 2
+        ball_y_pos = HEIGTH / 2
+        ball_x_vel = 10
+        ball_y_vel = 0
+
+    if (ball_x_pos + ball_x_vel > p2_x_pos - paddle_width) and (p2_y_pos < ball_y_pos + ball_y_vel + ball_width < p2_y_pos + paddle_height):
+        ball_x_vel = -ball_x_vel
+        ball_y_vel = (p2_y_pos + paddle_height / 2 - ball_y_pos) / 15
+        ball_y_vel = -ball_y_vel
+
+    elif ball_x_pos + ball_x_vel > HEIGTH:
+        p1_score += 1
+        ball_x_pos = WIDTH / 2
+        ball_y_pos = HEIGTH / 2
+        ball_x_vel = -10
+        ball_y_vel = 0
+
+    if ball_y_pos + ball_y_vel > HEIGTH or ball_y_pos + ball_y_vel < 0:
+        ball_y_vel = -ball_y_vel
+
+    ball_x_pos += ball_x_vel
+    ball_y_pos += ball_y_vel
+
+pygame.display.set_caption('PYTHON PONG')
+screen.fill(BLACK)
+pygame.display.flip()
+
+running = True
+
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                running = False
+            if event.key == pygame.K_w:
+                p1_up = True
+            if event.key == pygame.K_s:
+                p1_down = True            
+            if event.key == pygame.K_UP:
+                p2_up = True  
+            if event.key == pygame.K_DOWN:
+                p2_down = True  
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_w:
+                p1_up = False
+            if event.key == pygame.K_s:
+                p1_down = False            
+            if event.key == pygame.K_UP:
+                p2_up = False  
+            if event.key == pygame.K_DOWN:
+                p2_down = False 
+
+    screen.fill(BLACK)
+    apply_player_movement()
+    aplly_ball_movement()
+    draw_Objects()
+
+    pygame.display.flip()
+    pygame.time.wait(delay)
