@@ -1,35 +1,29 @@
+#inicialização e configuração da tela:
 import  pygame
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-
 WIDTH = 600
 HEIGTH = 600
 
 pygame.init()
 game_font = pygame.font.SysFont('Ubuntu', 40)
 
+#Posições e dimensões 
 delay = 30
-
 paddle_speed = 20
-
 paddle_width = 10
 paddle_height = 100
-
 p1_x_pos = 10
 p1_y_pos = HEIGTH / 2 - paddle_height / 2
-
 p2_x_pos = WIDTH - paddle_width - 10
 p2_y_pos = HEIGTH / 2 - paddle_height / 2
-
 p1_score = 0
 p2_score = 0
-
 p1_up = False
 p1_down = False
 p2_up = False
 p2_down = False
-
 ball_x_pos = WIDTH / 2
 ball_y_pos = HEIGTH / 2
 ball_width = 8
@@ -38,6 +32,7 @@ ball_y_vel = 0
 
 screen = pygame.display.set_mode((HEIGTH, WIDTH))
 
+#Desenho dos elementos na tela
 def draw_Objects():
     pygame.draw.rect(screen, WHITE, (int(p1_x_pos), int(p1_y_pos), paddle_width, paddle_height))
 
@@ -49,6 +44,7 @@ def draw_Objects():
 
     screen.blit(score, (WIDTH / 2, 30))
 
+#Movimentação dos jogadores
 def apply_player_movement():
     global p1_y_pos
     global p2_y_pos
@@ -63,7 +59,7 @@ def apply_player_movement():
     elif p2_down:
         p2_y_pos = min(p2_y_pos + paddle_speed, HEIGTH)
 
-
+#Movimentação da Bola
 def aplly_ball_movement():
     global ball_x_pos
     global ball_y_pos
@@ -106,9 +102,9 @@ def aplly_ball_movement():
 pygame.display.set_caption('PYTHON PONG')
 screen.fill(BLACK)
 pygame.display.flip()
-
 running = True
 
+#Loop principal do jogo
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
