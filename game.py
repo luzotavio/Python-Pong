@@ -3,6 +3,10 @@ import  pygame
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+YELLOW = (255, 255, 0)
 WIDTH = 600
 HEIGTH = 600
 
@@ -38,11 +42,30 @@ def draw_Objects():
 
     pygame.draw.rect(screen, WHITE, (int(p2_x_pos), int(p2_y_pos), paddle_width, paddle_height))
 
-    pygame.draw.circle(screen, WHITE, (ball_x_pos, ball_y_pos), ball_width)
+    pygame.draw.circle(screen, GREEN, (ball_x_pos, ball_y_pos), ball_width)
 
-    score = game_font.render(f"{str(p1_score)} - {str(p2_score)}", False, WHITE)
+    #Linha divisoria
+    for i in range(0, HEIGTH, 20):
+        pygame.draw.rect(screen, WHITE, (WIDTH // 2 - 1, i, 2, 10))
 
-    screen.blit(score, (WIDTH / 2, 30))
+    #cores do placar
+    if p1_score > p2_score:
+        p1_color = GREEN
+        p2_color = RED
+    elif p1_score < p2_score:
+        p1_color = RED
+        p2_color = GREEN
+    else:
+        p1_color = YELLOW
+        p2_color = YELLOW
+
+    p1_score_display = game_font.render(str(p1_score), False, p1_color)
+    
+    p2_score_display = game_font.render(str(p2_score), False, p2_color)
+
+    screen.blit(p1_score_display, (WIDTH / 2 - p1_score_display.get_width() - 10, 30))
+    
+    screen.blit(p2_score_display, (WIDTH / 2 + 10, 30))
 
 #Movimentação dos jogadores
 def apply_player_movement():
